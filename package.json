@@ -1,0 +1,11 @@
+{
+  "name": "martian-robots",
+  "version": "0.1.0",
+  "description": "Mars One planner",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers ts:ts-node/register --require source-map-support/register"
+  },
+  "author": "Paul Duguet",
+  "license": "ISC"
+}
