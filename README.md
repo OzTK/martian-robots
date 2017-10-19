@@ -4,7 +4,7 @@
 
 * R robots are sent to Mars (NO MAX)
 * Mars is a grid of M location points (x, y) (MAX X: 50, MAX Y: 50)
-* Mars is a flat planet (like Earth a few centuries ago) => gris is not circular
+* Mars is a flat planet (like Earth a few centuries ago) => grid is not circular
 * Robots moving out of the grid => falls off => invisible wall preventing other robots to fall
 * Robot = (x, y, orientation)
 * Orientation = N | S | E | W
