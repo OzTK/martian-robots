@@ -7,5 +7,14 @@
     "test": "mocha --compilers ts:ts-node/register --require source-map-support/register"
   },
   "author": "Paul Duguet",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mocha": "^2.2.43",
+    "@types/should": "^11.2.0",
+    "mocha": "^4.0.1",
+    "should": "^13.1.2",
+    "source-map-support": "^0.5.0",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3"
+  }
 }
