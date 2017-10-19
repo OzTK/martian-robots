@@ -36,22 +36,22 @@ export function orientationToString(o: Orientation): string {
 }
 
 export function rotate(orientation: Orientation, instruction: InstructionValue): Orientation {
-    switch ([orientation, instruction]) {
-        case [Orientation.N, InstructionValue.L]:
+    switch (orientation + "|" + instruction) {
+        case Orientation.N + "|" + InstructionValue.L:
             return Orientation.W;
-        case [Orientation.S, InstructionValue.L]:
+        case Orientation.S + "|" + InstructionValue.L:
             return Orientation.E;
-        case [Orientation.E, InstructionValue.L]:
+        case Orientation.E + "|" + InstructionValue.L:
             return Orientation.N;
-        case [Orientation.W, InstructionValue.L]:
+        case Orientation.W + "|" + InstructionValue.L:
             return Orientation.S;
-        case [Orientation.N, InstructionValue.R]:
+        case Orientation.N + "|" + InstructionValue.R:
             return Orientation.E;
-        case [Orientation.S, InstructionValue.R]:
+        case Orientation.S + "|" + InstructionValue.R:
             return Orientation.W;
-        case [Orientation.E, InstructionValue.R]:
+        case Orientation.E + "|" + InstructionValue.R:
             return Orientation.S;
-        case [Orientation.W, InstructionValue.R]:
+        case Orientation.W + "|" + InstructionValue.R:
             return Orientation.N;
         default:
             return orientation;
@@ -92,3 +92,8 @@ export type Instruction = { kind: "instruction", value: InstructionValue, next: 
 export type InstructionSet = NoInstruction | Instruction;
 export const noInstruction = (): NoInstruction => ({ kind: TYPE_NO_INSTRUCTION });
 export const instruction = (value: InstructionValue, next: InstructionSet): Instruction => ({ kind: TYPE_INSTRUCTION, value, next });
+export const parseInstructions = (sequence: string) => {
+    return sequence.split("")
+        .map(action => instructionFromString(action))
+        .reduceRight((prev: InstructionSet, cur: InstructionValue, i, arr) => instruction(cur, prev), noInstruction());
+}

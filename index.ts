@@ -1,15 +1,7 @@
 import { run } from "./mars-planner";
 
-const input = "5 3 \
-1 1 E \
-RFRFRFRF \
-\
-3 2 N \
-FRRFLLFFRRFLL \
-\
-0 3 W \
-LLFFFLFLFL"
+const input = "5 3\n1 1 E\nRFRFRFRF\n\n3 2 N\nFRRFLLFFRRFLL\n\n0 3 W\nLLFFFLFLFL";
 
 const result = run(input);
 
-console.log(input);
+console.log(result);

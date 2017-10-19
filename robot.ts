@@ -23,17 +23,13 @@ export default class Robot {
         public instructions: InstructionSet) {};
 
     executeInstructions(mars: Mars, robot: Robot = this): Robot {
-        switch ([robot.instructions.kind, robot.position.kind]) {
-            case [TYPE_NO_INSTRUCTION,]:
-            case [,TYPE_LOST]:
-                return robot;
-            case [TYPE_INSTRUCTION, TYPE_COORDINATES]:
-                const instruction = robot.instructions as Instruction;
-                return this.executeInstructions(mars
-                    , new Robot(robot.getNextPosition(mars), robot.getNextOrientation(), instruction.next));
-            default:
-                throw new Error("Impossible robot case");
+        const kinds = robot.instructions.kind + robot.position.kind;
+        if (robot.instructions.kind === TYPE_NO_INSTRUCTION || robot.position.kind === TYPE_LOST) {
+            return robot;
         }
+
+        return this.executeInstructions(mars
+            , new Robot(robot.getNextPosition(mars), robot.getNextOrientation(), robot.instructions.next));
     }
 
     getNextOrientation(): Orientation {
@@ -48,28 +44,39 @@ export default class Robot {
     getNextPosition(mars: Mars): RobotPosition {
         if (this.instructions.kind === TYPE_INSTRUCTION 
             && this.instructions.value === InstructionValue.F) {
-            const [x, y] = this.position.value;
-            if (!mars.isPositionValid([x, y])) {
+            const coords = this.move(this.position.value);
+            if (!mars.isPositionValid(coords.value)) {
+                const [x, y] = this.position.value;
+                if (mars[x]) {
+                    return this.position;
+                }
+
+                mars[x] = y;
                 return lost([x, y]);
             }
-            switch (this.orientation) {
-                case Orientation.N:
-                    return coordinates([x, y+1]);
-                case Orientation.S:
-                    return coordinates([x, y-1]);
-                case Orientation.E:
-                    return coordinates([x-1, y]);
-                case Orientation.W:
-                    return coordinates([x+1, y]);
-            }
+
+            return coords;
         }
 
         return this.position;
     }
 
+    private move([x, y]: [number, number]) {
+        switch (this.orientation) {
+            case Orientation.N:
+                return coordinates([x, y+1]);
+            case Orientation.S:
+                return coordinates([x, y-1]);
+            case Orientation.E:
+                return coordinates([x+1, y]);
+            case Orientation.W:
+                return coordinates([x-1, y]);
+        }
+    }
+
     toString(): string {
         const [x, y] = this.position.value;
-        const initial = `${x} ${orientationToString(this.orientation)} ${y}`;
+        const initial = `${x} ${y} ${orientationToString(this.orientation)}`;
         switch (this.position.kind) {
             case TYPE_COORDINATES:
                 return initial;
