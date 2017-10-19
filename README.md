@@ -1,5 +1,28 @@
 # Martian Robots
 
+## Run it!
+
+First install dependencies and build:
+
+```
+> npm install
+> npm build
+```
+
+To run the Sample Input:
+
+```
+> npm start
+```
+
+Tests can also be run to check if the algorithm works:
+
+```
+> npm test
+```
+
+The input can be changed in index.ts by replacing the text 
+
 ## Problem's data
 
 * R robots are sent to Mars (NO MAX)
